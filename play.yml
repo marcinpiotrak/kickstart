@@ -1,0 +1,62 @@
+- name: Setting network interfaces
+  hosts: localhost
+  connection: local
+  gather_subset: [ 'min', 'network' ]
+  become: yes
+  vars_prompt:
+    - name: "ifcfgeth0ip"
+      prompt: "Type public IP address"
+      private: no
+    - name: "ifcfgeth0gw"
+      prompt: "Type public gateway"
+      private: no
+    - name: "ifcfgeth0sm"
+      prompt: "Type public subnetmask"
+      private: no
+    - name: "ifcfgeth0dns"
+      prompt: "Type public DNS"
+      private: no
+    - name: "ifcfgeth1ip"
+      prompt: "Type eth0:1 IP address"
+      private: no
+    - name: "ifcfgeth1sm"
+      prompt: "Type eth0:1 subnetmask"
+      private: no
+    - name: "ifcfgeth2ip"
+      prompt: "Type eth0:2 IP address"
+      private: no
+    - name: "ifcfgeth2sm"
+      prompt: "Type eth0:2 subnetmask"
+      private: no
+    - name: "ifcfgeth3ip"
+      prompt: "Type eth0:3 IP address"
+      private: no
+    - name: "ifcfgeth3sm"
+      prompt: "Type eth0:3 subnetmask"
+      private: no
+
+  tasks:
+    - name: Setting ifcfg-eth0
+      template:
+        src: templates/ifcfgeth0
+        dest: /etc/sysconfig/network-scripts/ifcfg-eth0
+
+    - name: Setting ifcfg-eth0:1
+      template:
+        src: templates/ifcfgeth0:1
+        dest: /etc/sysconfig/network-scripts/ifcfg-eth0:1
+
+    - name: Setting ifcfg-eth0:2
+      template:
+        src: templates/ifcfgeth0:2
+        dest: /etc/sysconfig/network-scripts/ifcfg-eth0:2
+
+    - name: Setting ifcfg-eth0:3
+      template:
+        src: templates/ifcfgeth0:3
+        dest: /etc/sysconfig/network-scripts/ifcfg-eth0:3
+
+    - name: Restarting network service
+      service:
+        name: network.service
+        state: restarted

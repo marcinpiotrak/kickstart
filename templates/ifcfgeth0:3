@@ -1,0 +1,7 @@
+TYPE="Ethernet"
+BOOTPROTO="static"
+IPADDR={{ ifcfgeth3ip }}
+NETMASK={{ ifcfgeth3sm }}
+DEVICE="eth0:3"
+NAME="eth0:3"
+ONBOOT=yes
